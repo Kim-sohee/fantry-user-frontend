@@ -1,11 +1,12 @@
 <script setup>
-  import { useRouter } from 'vue-router';
+  import { useRoute, useRouter } from 'vue-router';
   import { ref } from 'vue';
   import { login } from '@/api/login';
   import { useUserStore } from '@/stores/userStore'
   const userStore = useUserStore();
 
   const router = useRouter();
+  const route = useRoute();
 
   const username = ref('');
   const password = ref('');
@@ -33,6 +34,11 @@
 
   const goToFind=()=>{
     router.push('/login/find');
+  }
+
+  //sns 로그인
+  const loginWithSns = (provider) => {
+    window.location.href = `http://localhost:8080/oauth2/authorization/${provider}`;
   }
 
 </script>
@@ -74,8 +80,8 @@
         <span>sns login</span>
       </div>
       <div class="sns-btns">
-        <button type="button" class="sns-btn naver" name="naver"></button>
-        <button type="button" class="sns-btn kakao" name="kakao"></button>
+        <button type="button" class="sns-btn naver" name="naver" @click="loginWithSns('naver')"></button>
+        <button type="button" class="sns-btn google" name="google" @click="loginWithSns('google')"></button>
       </div>
     </div>
     <!--SNS Login End-->
@@ -288,8 +294,8 @@
     background-image: url("/images/login_naver_btn.png");
   }
 
-  .sns-btn.kakao {
-    background-image: url("/images/login_kakao_btn.png");
+  .sns-btn.google {
+    background-image: url("/images/login_google_btn.png");
   }
 
   /* 메인으로 돌아가기 버튼 */

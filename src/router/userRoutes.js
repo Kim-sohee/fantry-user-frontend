@@ -33,6 +33,8 @@ const InspectionStep3Page = () => import('@/pages/user/inspection/Step3Page.vue'
 const InspectionPolicyPage = () => import('@/pages/user/inspection/InspectionPolicyPage.vue'); 
 // 마이페이지
 const MyPageLayout = () => import('@/pages/user/mypage/MyPage.vue')
+const OAuth2RedirectHandler = () => import('@/pages/user/access/OAuth2RedirectHandler.vue')
+
 
 const userRoutes = {
   path: '/',
@@ -42,6 +44,10 @@ const userRoutes = {
       path: '',
       name: 'Home',
       component: HomePage,
+    },
+    {
+      path: '/oauth2/callback/:provider',
+      component: OAuth2RedirectHandler
     },
     {
       path: 'login',
