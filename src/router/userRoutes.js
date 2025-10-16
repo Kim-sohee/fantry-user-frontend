@@ -24,7 +24,6 @@ const SignupComplete = () => import('@/pages/user/access/SignupComplete.vue');
 const SignupFail = () => import('@/pages/user/access/SignupFail.vue');
 const ProductListPage = () => import('@/pages/product/ProductListPage.vue');
 const ProductDetailPage = () => import('@/pages/product/ProductDetailPage.vue');
-const ProductAuctionPage = () => import('@/pages/product/ProductAuctionPage.vue');
 const ProductAuctionPolicyPage = () => import('@/pages/product/ProductAuctionPolicyPage.vue');
 // 검수 페이지 컴포넌트
 const InspectionStep1Page = () => import('@/pages/user/inspection/Step1Page.vue')
@@ -120,15 +119,9 @@ const userRoutes = {
       meta: { requiredLogin: false },
     },
     {
-      path: 'product/detail/:id',
+      path: 'product/:id',
       name: 'ProductDetail',
       component: ProductDetailPage,
-      meta: { requiresAuth: false },
-    },
-        {
-      path: 'product/auction/:id',
-      name: 'ProducAuction',
-      component: ProductAuctionPage,
       meta: { requiresAuth: false },
     },
     {
@@ -162,7 +155,7 @@ const userRoutes = {
       component: InspectionPolicyPage,
       meta: { requiresAuth: false },
     },
-    // 마이페이지
+     // 마이페이지
     {
       path: 'mypage',
       name: 'MyPageLayout',
@@ -189,6 +182,63 @@ const userRoutes = {
           name: 'Complete',
           component: PaymentCompletePage,
           meta: { requiredLogin: false },
+        },
+      ],
+    },
+    // CS (고객 서비스) 관련 페이지
+    {
+      path: 'cs',
+      name: 'CustomerService',
+      component: () => import('@/pages/user/cs/CustomerServiceHomePage.vue'), // Default component for /cs
+      meta: { title: '고객센터' },
+      children: [
+        // 공지사항
+        {
+          path: 'notice',
+          name: 'UserNoticeList',
+          component: () => import('@/pages/user/cs/UserNoticeListPage.vue'),
+          meta: { requiresAuth: false, title: '공지사항' },
+        },
+        {
+          path: 'notice/:noticeId',
+          name: 'UserNoticeDetail',
+          component: () => import('@/pages/user/cs/UserNoticeDetailPage.vue'),
+          props: true,
+          meta: { requiresAuth: false, hidden: true, title: '공지사항 상세' },
+        },
+        // 자주 묻는 질문 (FAQ)
+        {
+          path: 'faq',
+          name: 'UserFaqList',
+          component: () => import('@/pages/user/cs/UserFaqListPage.vue'),
+          meta: { requiresAuth: false, title: '자주 묻는 질문' },
+        },
+        {
+          path: 'faq/:faqId',
+          name: 'UserFaqDetail',
+          component: () => import('@/pages/user/cs/UserFaqDetailPage.vue'),
+          props: true,
+          meta: { requiresAuth: false, hidden: true, title: '자주 묻는 질문 상세' },
+        },
+        // 1:1 문의
+        {
+          path: 'inquiry',
+          name: 'UserInquiryList',
+          component: () => import('@/pages/user/cs/UserInquiryListPage.vue'),
+          meta: { requiresAuth: true, title: '나의 1:1 문의' },
+        },
+        {
+          path: 'inquiry/create',
+          name: 'UserInquiryCreate',
+          component: () => import('@/pages/user/cs/UserInquiryCreatePage.vue'),
+          meta: { requiresAuth: true, title: '1:1 문의하기' },
+        },
+        {
+          path: 'inquiry/:inquiryId',
+          name: 'UserInquiryDetail',
+          component: () => import('@/pages/user/cs/UserInquiryDetailPage.vue'),
+          props: true,
+          meta: { requiresAuth: true, hidden: true, title: '1:1 문의 상세' },
         },
       ],
     },
